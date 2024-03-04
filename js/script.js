@@ -1,5 +1,6 @@
 const btnArrowUp = document.querySelector(".arrow-up");
 const btnArrowDown = document.querySelector(".arrow-down");
+const sliderWrapper = document.querySelector(".slider");
 
 const imagesList = [
   "./assets/img/01.webp",
@@ -57,17 +58,16 @@ btnArrowUp.addEventListener("click", function () {
 });
 
 //Inserimento logica cambio immagini con autoplay
-const autoplay = setInterval(()=>{
-  activateImg(counterImg);
+let autoplay = setInterval(autoplayStart, 3000);
 
-  if (counterImg === imagesList.length - 1) {
-    counterImg = 0;
-  } else {
-    counterImg++;
-  }
+//Inserimento logica di stop/ripresa dell'autoplay
+sliderWrapper.addEventListener("mouseover", () => {
+  clearInterval(autoplay);
+});
 
-  inactivateImg(counterImg);
-}, 3000)
+sliderWrapper.addEventListener("mouseout", () => {
+  autoplay = setInterval(autoplayStart, 3000);
+});
 
 // FUNCTIONS
 function activateImg(counter) {
@@ -80,4 +80,16 @@ function inactivateImg(counter) {
   imageCollection[counter].classList.remove("hide");
   imageThumbnailCollection[counter].classList.remove("opacity");
   imageThumbnailCollection[counter].classList.add("border");
+}
+
+function autoplayStart() {
+  activateImg(counterImg);
+
+  if (counterImg === imagesList.length - 1) {
+    counterImg = 0;
+  } else {
+    counterImg++;
+  }
+
+  inactivateImg(counterImg);
 }
