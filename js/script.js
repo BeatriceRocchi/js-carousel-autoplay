@@ -33,25 +33,19 @@ imageThumbnailCollection[counterImg].classList.add("border");
 
 //Inserimento logica cambio immagini al click
 btnArrowDown.addEventListener("click", function () {
-  imageCollection[counterImg].classList.add("hide");
-  imageThumbnailCollection[counterImg].classList.add("opacity");
-  imageThumbnailCollection[counterImg].classList.remove("border");
+  activateImg(counterImg);
 
   if (counterImg === imagesList.length - 1) {
     counterImg = 0;
   } else {
     counterImg++;
   }
-  
-  imageCollection[counterImg].classList.remove("hide");
-  imageThumbnailCollection[counterImg].classList.remove("opacity");
-  imageThumbnailCollection[counterImg].classList.add("border");
+
+  inactivateImg(counterImg);
 });
 
 btnArrowUp.addEventListener("click", function () {
-  imageCollection[counterImg].classList.add("hide");
-  imageThumbnailCollection[counterImg].classList.add("opacity");
-  imageThumbnailCollection[counterImg].classList.remove("border");
+  activateImg(counterImg);
 
   if (counterImg === 0) {
     counterImg = imagesList.length - 1;
@@ -59,7 +53,31 @@ btnArrowUp.addEventListener("click", function () {
     counterImg--;
   }
 
-  imageCollection[counterImg].classList.remove("hide");
-  imageThumbnailCollection[counterImg].classList.remove("opacity");
-  imageThumbnailCollection[counterImg].classList.add("border");
+  inactivateImg(counterImg);
 });
+
+//Inserimento logica cambio immagini con autoplay
+const autoplay = setInterval(()=>{
+  activateImg(counterImg);
+
+  if (counterImg === imagesList.length - 1) {
+    counterImg = 0;
+  } else {
+    counterImg++;
+  }
+
+  inactivateImg(counterImg);
+}, 3000)
+
+// FUNCTIONS
+function activateImg(counter) {
+  imageCollection[counter].classList.add("hide");
+  imageThumbnailCollection[counter].classList.add("opacity");
+  imageThumbnailCollection[counter].classList.remove("border");
+}
+
+function inactivateImg(counter) {
+  imageCollection[counter].classList.remove("hide");
+  imageThumbnailCollection[counter].classList.remove("opacity");
+  imageThumbnailCollection[counter].classList.add("border");
+}
