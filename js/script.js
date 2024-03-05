@@ -33,7 +33,24 @@ imageThumbnailCollection[counterImg].classList.remove("opacity");
 imageThumbnailCollection[counterImg].classList.add("border");
 
 //Inserimento logica cambio immagini al click
-btnArrowDown.addEventListener("click", function () {
+btnArrowDown.addEventListener("click", goNext);
+
+btnArrowUp.addEventListener("click", goPrev);
+
+//Inserimento logica cambio immagini con autoplay
+let autoplay = setInterval(goNext, 3000);
+
+//Inserimento logica di stop/ripresa dell'autoplay
+sliderWrapper.addEventListener("mouseenter", () => {
+  clearInterval(autoplay);
+});
+
+sliderWrapper.addEventListener("mouseleave", () => {
+  autoplay = setInterval(goNext, 3000);
+});
+
+// FUNCTIONS
+function goNext(){
   activateImg(counterImg);
 
   if (counterImg === imagesList.length - 1) {
@@ -43,9 +60,9 @@ btnArrowDown.addEventListener("click", function () {
   }
 
   inactivateImg(counterImg);
-});
+}
 
-btnArrowUp.addEventListener("click", function () {
+function goPrev(){
   activateImg(counterImg);
 
   if (counterImg === 0) {
@@ -55,21 +72,8 @@ btnArrowUp.addEventListener("click", function () {
   }
 
   inactivateImg(counterImg);
-});
+}
 
-//Inserimento logica cambio immagini con autoplay
-let autoplay = setInterval(autoplayStart, 3000);
-
-//Inserimento logica di stop/ripresa dell'autoplay
-sliderWrapper.addEventListener("mouseover", () => {
-  clearInterval(autoplay);
-});
-
-sliderWrapper.addEventListener("mouseout", () => {
-  autoplay = setInterval(autoplayStart, 3000);
-});
-
-// FUNCTIONS
 function activateImg(counter) {
   imageCollection[counter].classList.add("hide");
   imageThumbnailCollection[counter].classList.add("opacity");
@@ -80,16 +84,4 @@ function inactivateImg(counter) {
   imageCollection[counter].classList.remove("hide");
   imageThumbnailCollection[counter].classList.remove("opacity");
   imageThumbnailCollection[counter].classList.add("border");
-}
-
-function autoplayStart() {
-  activateImg(counterImg);
-
-  if (counterImg === imagesList.length - 1) {
-    counterImg = 0;
-  } else {
-    counterImg++;
-  }
-
-  inactivateImg(counterImg);
 }
